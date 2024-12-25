@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Quiz Game</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="d-none">
+        <div class="loading-overlay">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container text-center">
+        <h1 class="mb-4">Music Quiz Game</h1>
+
+        <!-- Step 1: Enable CORS -->
+        <div id="step1" class="quiz-container">
+            <h2>Enable CORS for Deezer API</h2>
+            <p>Click the button below to enable CORS for the Deezer API.</p>
+            <button id="enableCorsBtn" class="btn btn-primary w-100">Enable CORS</button>
+        </div>
+
+        <!-- Step 2: Search for an Artist -->
+        <div id="step2" class="quiz-container d-none">
+            <h2>Search for an Artist</h2>
+            <div class="input-group">
+                <input type="text" id="artistSearch" class="form-control" placeholder="Enter artist name">
+                <button id="searchBtn" class="btn btn-primary">Search</button>
+            </div>
+            <div id="artistList" class="row mt-3"></div>
+        </div>
+
+        <!-- Step 3: Music Quiz -->
+        <div id="step3" class="quiz-container d-none">
+            <h2>Music Quiz</h2>
+            <p id="questionText"></p>
+            <ul id="choices" class="list-group"></ul>
+            <p id="scoreText" class="mt-3 text-center"></p>
+        </div>
+    </div>
+
+    <!-- Hidden iframe for CORS -->
+    <iframe id="corsFrame" class="d-none"></iframe>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
