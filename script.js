@@ -20,19 +20,24 @@ function hideLoading() {
     document.getElementById("loadingScreen").classList.add("d-none");
 }
 
-// Enable CORS
 document.getElementById("enableCorsBtn").addEventListener("click", () => {
-    showLoading();
+    showLoading(); // Show loading spinner while enabling CORS
 
-    const iframe = document.getElementById("corsFrame");
-    iframe.src = corsAnywhereUrl;
-
-    iframe.onload = () => {
-        hideLoading();
-        document.getElementById("step1").classList.add("d-none");
-        document.getElementById("step2").classList.remove("d-none");
-    };
+    // Send a GET request to activate CORS Anywhere using no-cors mode
+    fetch("https://cors-anywhere.herokuapp.com/corsdemo", { mode: "no-cors" })
+        .then(() => {
+            console.log("CORS Anywhere enabled successfully.");
+            hideLoading(); // Hide loading spinner
+            document.getElementById("step1").classList.add("d-none");
+            document.getElementById("step2").classList.remove("d-none");
+        })
+        .catch(error => {
+            hideLoading(); // Hide loading spinner
+            alert("CORS Anywhere could not be enabled. Please try again later or check your network connection.");
+            console.error("Error enabling CORS:", error);
+        });
 });
+
 
 // Search Artists
 document.getElementById("searchBtn").addEventListener("click", () => {
