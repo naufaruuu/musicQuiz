@@ -20,23 +20,36 @@ function hideLoading() {
     document.getElementById("loadingScreen").classList.add("d-none");
 }
 
+// Enable CORS button logic
 document.getElementById("enableCorsBtn").addEventListener("click", () => {
-    showLoading(); // Show loading spinner while enabling CORS
+    // Open the original CORS Anywhere page in a new tab
+    window.open("https://cors-anywhere.herokuapp.com/corsdemo", "_blank");
 
-    // Send a GET request to activate CORS Anywhere using no-cors mode
-    fetch("https://cors-anywhere.herokuapp.com/corsdemo", { mode: "no-cors" })
-        .then(() => {
-            console.log("CORS Anywhere enabled successfully.");
-            hideLoading(); // Hide loading spinner
-            document.getElementById("step1").classList.add("d-none");
-            document.getElementById("step2").classList.remove("d-none");
+    // Inform the user to return after enabling CORS
+    alert("Please enable CORS Anywhere on the newly opened page, then click 'Done. Continue' here.");
+});
+
+// Done. Continue button logic
+document.getElementById("doneCorsBtn").addEventListener("click", () => {
+    // Optionally check if CORS is enabled
+    fetch("https://cors-anywhere.herokuapp.com/")
+        .then(response => {
+            if (response.status === 200) {
+                console.log("CORS Anywhere is enabled.");
+                document.getElementById("step1").classList.add("d-none");
+                document.getElementById("step2").classList.remove("d-none");
+            } else {
+                alert("CORS Anywhere is not enabled. Please try again.");
+            }
         })
         .catch(error => {
-            hideLoading(); // Hide loading spinner
-            alert("CORS Anywhere could not be enabled. Please try again later or check your network connection.");
-            console.error("Error enabling CORS:", error);
+            alert("Could not verify CORS status. Proceeding anyway.");
+            console.error("Error verifying CORS:", error);
+            document.getElementById("step1").classList.add("d-none");
+            document.getElementById("step2").classList.remove("d-none");
         });
 });
+
 
 
 // Search Artists
