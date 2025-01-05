@@ -65,7 +65,15 @@ public function showQuestion()
 
     $currentSong = $gameSongs[$currentQuestion];
 
-    // Generate choices (ensure unique tracks)
+    // Fetch the latest track details dynamically from Deezer
+    $deezerService = app()->make(\App\Services\DeezerService::class);
+    $trackDetails = $deezerService->getTrackDetails($currentSong['id']);
+
+    if ($trackDetails && isset($trackDetails['preview'])) {
+        $currentSong['preview'] = $trackDetails['preview'];
+    }
+
+    // Generate choices
     $choices = collect($gameSongs)
         ->filter(fn($song) => $song['id'] != $currentSong['id'])
         ->shuffle()
@@ -175,6 +183,7 @@ public function showQuestion()
         'topRecords' => $topRecords,
         'questions' => $questions,
     ]);
+    
 }
 
     
