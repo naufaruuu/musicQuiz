@@ -107,7 +107,8 @@ public function answerQuestion(Request $request)
 
     // Calculate elapsed time for this question
     $startTime = session('question_start_time');
-    $elapsedTime = $startTime ? now()->diffInSeconds($startTime) : 0;
+    $elapsedTime = $startTime ? now()->diffInMilliseconds($startTime) : 0; // Use diffInMilliseconds for precision
+
 
     // Save user's answer and elapsed time in the session
     session()->put("answers.{$currentQuestion}", [
@@ -143,10 +144,8 @@ public function finishGame()
     foreach ($gameSongs as $index => $song) {
         $answerData = session("answers.{$index}", []);
         $userAnswerId = $answerData['selected_song_id'] ?? null;
-        $elapsedTime = $answerData['elapsed_time'] ?? 0;
-
-        $totalElapsedTime += $elapsedTime; // Add to total elapsed time
-
+        $elapsedTime = $answerData['elapsed_time'] ?? 0; // Already in milliseconds
+    $totalElapsedTime += $elapsedTime;
         $userAnswer = null;
 
         if ($userAnswerId) {

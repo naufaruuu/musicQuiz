@@ -9,13 +9,16 @@
     <h1 class="text-center">Music Quiz Game</h1>
     <h2 class="text-center mt-4">Question {{ $questionNumber }}: Which song is playing?</h2>
     <h3 class="text-center">Time Elapsed: <span id="time-elapsed">0</span> seconds</h3>
-<script>
-    let timeElapsed = 0;
-    const timer = setInterval(() => {
-        timeElapsed++;
-        document.getElementById('time-elapsed').textContent = timeElapsed;
-    }, 1000);
-</script>
+    <script>
+        let timeElapsed = 0; // Time in milliseconds
+        const timer = setInterval(() => {
+            timeElapsed += 100; // Increment by 100ms (0.1 second)
+            const seconds = Math.floor(timeElapsed / 1000);
+            const milliseconds = timeElapsed % 1000;
+            document.getElementById('time-elapsed').textContent = `${seconds}s ${milliseconds}ms`;
+        }, 100);
+    </script>
+    
 
 
     <div class="text-center mt-3">

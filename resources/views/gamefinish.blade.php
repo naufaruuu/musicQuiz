@@ -33,7 +33,13 @@
     <h1 class="text-center">Quiz Complete!</h1>
     <img src="{{ $artistImage }}" alt="Artist" class="artist-image mt-3">
     <h2 class="mt-4">Your final score is <strong>{{ $score }}/10</strong></h2>
-    <p class="text-muted">You completed the "{{ $artistName }}" quiz in <strong>{{ $duration }} seconds</strong>.</p>
+    <p class="text-muted">
+        You completed the "{{ $artistName }}" quiz in 
+        <strong>
+            {{ floor($duration / 1000) }}s {{ $duration % 1000 }}ms
+        </strong>.
+    </p>
+    
 
     <h3 class="mt-5">Scoreboard for {{ $artistName }}</h3>
     <table class="table table-striped table-bordered mt-3">
@@ -73,7 +79,10 @@
             @if (!$question['is_correct'])
                 <p><strong>Correct Answer:</strong> {{ $question['correct_answer'] }}</p>
             @endif
-            <p><strong>Time Elapsed:</strong> {{ $question['elapsed_time'] }} seconds</p>
+            <p><strong>Time Elapsed:</strong> 
+                {{ floor($question['elapsed_time'] / 1000) }}s 
+                {{ $question['elapsed_time'] % 1000 }}ms
+            </p>            
             <audio controls>
                 <source src="{{ $question['preview'] }}" type="audio/mpeg">
                 Your browser does not support the audio element.
