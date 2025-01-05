@@ -9,7 +9,7 @@ class Record extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'artist_id', 'score'];
+    protected $fillable = ['user_id', 'artist_id', 'score', 'duration'];
 
     // Relationship with Username
     public function user()

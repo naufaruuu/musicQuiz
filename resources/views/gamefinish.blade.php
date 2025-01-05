@@ -42,26 +42,31 @@
     
 
     <h3 class="mt-5">Scoreboard for {{ $artistName }}</h3>
-    <table class="table table-striped table-bordered mt-3">
-        <thead class="table-dark">
+<table class="table table-striped table-bordered mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Duration</th> <!-- Add Duration Column -->
+            <th>Date & Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($topRecords as $index => $record)
             <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Score</th>
-                <th>Date & Time</th>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $record->user->username }}</td>
+                <td>{{ $record->score }}</td>
+                <td>
+                    {{ floor($record->duration / 1000) }}s {{ $record->duration % 1000 }}ms
+                </td> <!-- Format Duration -->
+                <td>{{ $record->created_at->format('Y-m-d H:i:s') }}</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach ($topRecords as $index => $record)
-                <tr>
-                    <td>{{ $index + 1 }}</td>
-                    <td>{{ $record->user->username }}</td>
-                    <td>{{ $record->score }}</td>
-                    <td>{{ $record->created_at->format('Y-m-d H:i:s') }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+        @endforeach
+    </tbody>
+</table>
+
 
     <h3 class="mt-5">Question Corrections</h3>
     @foreach ($questions as $index => $question)

@@ -145,7 +145,7 @@ public function finishGame()
         $answerData = session("answers.{$index}", []);
         $userAnswerId = $answerData['selected_song_id'] ?? null;
         $elapsedTime = $answerData['elapsed_time'] ?? 0; // Already in milliseconds
-    $totalElapsedTime += $elapsedTime;
+        $totalElapsedTime += $elapsedTime;
         $userAnswer = null;
 
         if ($userAnswerId) {
@@ -172,7 +172,9 @@ public function finishGame()
         'user_id' => $userId,
         'artist_id' => $artistId,
         'score' => $score,
+        'duration' => $totalElapsedTime, // Save total duration in milliseconds
     ]);
+    
 
     // Fetch the top 10 scores for the artist
     $topRecords = \App\Models\Record::where('artist_id', $artistId)
