@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql_container
+    restart: always
+    ports:
+      - "3306:3306" # MySQL default port
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  # Root password for MySQL
+      MYSQL_DATABASE: alfaguess           # Database name
+      MYSQL_USER: alfa                    # Username
+      MYSQL_PASSWORD: alfa                # Password for the user
+    volumes:
+      - mysql_data:/var/lib/mysql         # Persist data in a volume
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_container
+    restart: always
+    ports:
+      - "8080:80" # Expose phpMyAdmin on port 8080
+    environment:
+      PMA_HOST: mysql                     # Hostname of the MySQL service
+      PMA_USER: alfa                      # MySQL user
+      PMA_PASSWORD: alfa                  # MySQL user's password
+    depends_on:
+      - mysql                             # Ensure MySQL starts first
+
+volumes:
+  mysql_data:

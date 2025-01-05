@@ -22,7 +22,6 @@ Route::get('/', function () {
 
 
 
-
 // Login routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -30,16 +29,20 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes that require authentication
 Route::middleware(['auth.user'])->group(function () {
+
+    // Artist search and selection
     Route::get('/searchArtist', [ArtistController::class, 'searchArtistForm'])->name('searchArtist.form');
     Route::post('/searchArtist', [ArtistController::class, 'searchArtist'])->name('searchArtist');
     Route::get('/selectArtist', [ArtistController::class, 'selectArtistForm'])->name('selectArtist.form');
     Route::post('/selectArtist', [ArtistController::class, 'selectArtist'])->name('selectArtist');
-    Route::get('/game/question', [GameController::class, 'showQuestion'])->name('game.question');
-    Route::get('/game/start', [GameController::class, 'startGame'])->name('game.start');
-    Route::get('/game/question', [GameController::class, 'showQuestion'])->name('game.question');
-    Route::post('/game/answer', [GameController::class, 'answerQuestion'])->name('game.answer');
-    Route::get('/game/finish', [GameController::class, 'finishGame'])->name('game.finish');
 
+    // Game routes with session validation
+    Route::middleware(['ensureGameSession'])->group(function () {
+        Route::get('/game/start', [GameController::class, 'startGame'])->name('game.start');
+        Route::get('/game/question', [GameController::class, 'showQuestion'])->name('game.question');
+        Route::post('/game/answer', [GameController::class, 'answerQuestion'])->name('game.answer');
+        Route::get('/game/finish', [GameController::class, 'finishGame'])->name('game.finish');
+    });
 
 });
 

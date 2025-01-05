@@ -15,7 +15,7 @@
             <source src="{{ $currentSong->preview }}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-    </div>
+    </div>    
 
     <form method="POST" action="{{ route('game.answer') }}" class="mt-4">
         @csrf

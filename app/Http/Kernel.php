@@ -69,8 +69,8 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         // Other middleware
         'auth.user' => \App\Http\Middleware\AuthenticateUser::class,
+        'ensureGameSession' => \App\Http\Middleware\EnsureGameSession::class,
     ];
-    
     
 }
 

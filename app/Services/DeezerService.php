@@ -22,28 +22,31 @@ class DeezerService
     }
 
     public function getArtistAlbums($artistId)
+{
+    $response = $this->client->get("artist/{$artistId}/albums");
+    $data = json_decode($response->getBody(), true);
+
+    return $data['data'] ?? [];
+}
+
+public function getAlbumTracks($albumId)
+{
+    $response = $this->client->get("album/{$albumId}/tracks");
+    $data = json_decode($response->getBody(), true);
+
+    return $data['data'] ?? [];
+}
+
+
+    public function getTrackPreview($trackId)
     {
-        $albums = [];
-        $nextUrl = "artist/{$artistId}/albums";
-
-        while ($nextUrl) {
-            $response = $this->client->get($nextUrl);
-            $data = json_decode($response->getBody(), true);
-            $albums = array_merge($albums, $data['data']);
-            $nextUrl = $data['next'] ?? null; // Continue if there are more pages
-        }
-
-        return $albums;
-    }
-
-    
-    public function getAlbumTracks($albumId)
-    {
-        $response = $this->client->get("album/{$albumId}/tracks");
+        $response = $this->client->get("track/{$trackId}");
         $data = json_decode($response->getBody(), true);
-    
-        return $data['data'] ?? [];
+
+        return $data['preview'] ?? null; // Return the preview URL if available
     }
+
+
     
 
 }
