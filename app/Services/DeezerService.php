@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Illuminate\Support\Facades\Log;
 
 class DeezerService
 {
@@ -55,19 +56,27 @@ class DeezerService
 
     public function getTrackDetails($trackId)
     {
-        return Cache::remember("track_{$trackId}", now()->addHours(24), function () use ($trackId) {
+        try {
             $url = "https://api.deezer.com/track/{$trackId}";
             $response = Http::retry($this->maxRetries, $this->retryDelay, function ($exception) {
                 return $exception instanceof RequestException;
             })->get($url);
-
+    
             if ($response->successful()) {
                 return $response->json();
             }
-
+    
+            // Log an error if the response is unsuccessful
+            Log::error("Failed to fetch track details for ID {$trackId}: " . $response->body());
+    
             return null;
-        });
+        } catch (\Exception $e) {
+            // Log any exceptions for debugging
+            Log::error("Exception occurred while fetching track details: " . $e->getMessage());
+            return null;
+        }
     }
+    
 
     private function retryMiddleware()
     {

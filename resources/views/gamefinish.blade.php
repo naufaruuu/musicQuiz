@@ -59,27 +59,29 @@
 
     <h3 class="mt-5">Question Corrections</h3>
     @foreach ($questions as $index => $question)
-        <div class="question-card d-flex align-items-center">
-            <img src="{{ $question['image'] }}" alt="Track" class="track-image">
-            <div class="flex-grow-1">
-                <h5>No {{ $index + 1 }}:</h5>
-                <p><strong>Answered:</strong> {{ $question['user_answer'] }} 
-                    @if ($question['is_correct'])
-                        <span class="text-success">(Correct)</span>
-                    @else
-                        <span class="text-danger">(Wrong)</span>
-                    @endif
-                </p>
-                @if (!$question['is_correct'])
-                    <p><strong>Correct Answer:</strong> {{ $question['correct_answer'] }}</p>
+    <div class="question-card d-flex align-items-center">
+        <img src="{{ $question['image'] }}" alt="Track" class="track-image">
+        <div class="flex-grow-1">
+            <h5>No {{ $index + 1 }}:</h5>
+            <p><strong>Answered:</strong> {{ $question['user_answer'] }}
+                @if ($question['is_correct'])
+                    <span class="text-success">(Correct)</span>
+                @else
+                    <span class="text-danger">(Wrong)</span>
                 @endif
-                <audio controls>
-                    <source src="{{ $question['preview'] }}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
+            </p>
+            @if (!$question['is_correct'])
+                <p><strong>Correct Answer:</strong> {{ $question['correct_answer'] }}</p>
+            @endif
+            <p><strong>Time Elapsed:</strong> {{ $question['elapsed_time'] }} seconds</p>
+            <audio controls>
+                <source src="{{ $question['preview'] }}" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
         </div>
-    @endforeach
+    </div>
+@endforeach
+
 </div>
 </body>
 </html>

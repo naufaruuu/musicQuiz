@@ -8,6 +8,15 @@
 <div class="container mt-5">
     <h1 class="text-center">Music Quiz Game</h1>
     <h2 class="text-center mt-4">Question {{ $questionNumber }}: Which song is playing?</h2>
+    <h3 class="text-center">Time Elapsed: <span id="time-elapsed">0</span> seconds</h3>
+<script>
+    let timeElapsed = 0;
+    const timer = setInterval(() => {
+        timeElapsed++;
+        document.getElementById('time-elapsed').textContent = timeElapsed;
+    }, 1000);
+</script>
+
 
     <div class="text-center mt-3">
         <!-- Audio Player with Autoplay -->

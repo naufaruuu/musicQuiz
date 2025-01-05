@@ -86,10 +86,13 @@ class ArtistController extends Controller
     }
 
     // Store artist ID and name in session
+    // Store artist ID, name, and image in session
     session([
         'artist_id' => $artist->id,
         'artist_name' => $artist->name,
+        'artist_image' => $selectedArtist['picture_big'] ?? $selectedArtist['picture'] ?? 'https://via.placeholder.com/150',
     ]);
+
 
     // Check if songs exist for this artist
     $existingSongs = \App\Models\Song::where('artist_id', $artist->id)->exists();
